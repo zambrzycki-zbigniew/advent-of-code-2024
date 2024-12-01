@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-navigation-drawer app>
+    <v-navigation-drawer persistent app>
       <v-list>
         <v-list-item
           density="compact"
