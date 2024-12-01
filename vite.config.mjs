@@ -13,9 +13,17 @@ import { fileURLToPath, URL } from 'node:url'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/advent-of-code-2024/',
+  base: './',
   build: {
     outDir: 'build',
+    assetsDir: 'assets',
+    rollupOptions: {
+      output: {
+        entryFileNames: 'assets/[name].[hash].js',
+        chunkFileNames: 'assets/[name].[hash].js',
+        assetFileNames: 'assets/[name].[hash].[ext]',
+      },
+    },
   },
   plugins: [
     VueRouter(),
@@ -36,6 +44,7 @@ export default defineConfig({
         families: [{
           name: 'Roboto',
           styles: 'wght@100;300;400;500;700;900',
+          display: 'swap',
         }],
       },
     }),
