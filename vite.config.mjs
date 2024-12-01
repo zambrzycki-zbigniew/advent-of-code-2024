@@ -11,6 +11,9 @@ import Vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
 import { defineConfig } from 'vite'
 import { fileURLToPath, URL } from 'node:url'
 
+
+console.log('Alias @ resolves to:', fileURLToPath(new URL('./src', import.meta.url)));
+
 // https://vitejs.dev/config/
 export default defineConfig({
   base: '/advent-of-code-2024/',
@@ -61,9 +64,10 @@ export default defineConfig({
   ],
   define: { 'process.env': {} },
   resolve: {
-    alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
-    },
+    alias: [{
+      find: '@/',
+      replacement: fileURLToPath(new URL('./src', import.meta.url))+"/"
+    }],
     extensions: [
       '.js',
       '.json',
