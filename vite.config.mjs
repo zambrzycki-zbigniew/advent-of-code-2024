@@ -13,7 +13,7 @@ import { fileURLToPath, URL } from 'node:url'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: './',
+  base: '/advent-of-code-2024/',
   build: {
     outDir: 'build',
     assetsDir: 'assets',
