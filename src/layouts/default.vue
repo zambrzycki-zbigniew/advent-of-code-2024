@@ -1,21 +1,35 @@
 <template>
   <v-app>
-    <v-navigation-drawer persistent app>
-      <v-list>
+    <v-navigation-drawer app :rail="rail" permanent @click="rail = false">
+      <v-list-item prepend-icon="mdi-home" :to="`/`">
+        <template v-slot:append>
+          <v-btn
+            icon="mdi-chevron-left"
+            variant="text"
+            @click.stop.prevent="rail = !rail"
+          ></v-btn>
+        </template>
+      </v-list-item>
+
+      <v-divider></v-divider>
+      <v-list density="compact">
         <v-list-item
-          density="compact"
+          min-height="32"
           v-for="day in dayNumbers"
           :key="day"
-          :to="`/days/${day}`"
+          :to="days.includes(day) ? `/days/${day}` : null"
           :disabled="!days.includes(day)"
           link
         >
-          <v-list-item-title class="d-flex justify-space-between">
+          <v-list-item-title v-if="!rail" class="d-flex justify-space-between">
             Day {{ day }}
             <span>
               <v-icon color="amber" icon="mdi-star" />
               <v-icon color="amber" icon="mdi-star" />
             </span>
+          </v-list-item-title>
+          <v-list-item-title value v-else>
+            {{ day }}
           </v-list-item-title>
         </v-list-item>
       </v-list>
@@ -29,6 +43,9 @@
 
 <script setup>
 import { ref } from "vue";
+
+const drawer = ref(true);
+const rail = ref(false);
 
 const dayFiles = import.meta.glob("@/components/days/*/day.vue");
 const dayNumbers = Array.from({ length: 25 }, (_, i) => i + 1);

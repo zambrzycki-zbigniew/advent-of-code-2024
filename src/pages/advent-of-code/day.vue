@@ -2,60 +2,41 @@
   <v-container>
     <v-textarea
       v-model="text"
-      label="Day input"
+      label="Input"
       rows="10"
       outlined
+      disabled
       placeholder="Paste your day input here..."
     ></v-textarea>
-
-    <v-btn class="mt-4" color="primary" @click="handleText"> Submit </v-btn>
-    <DayComponent v-if="inputs.length > 0" :inputs="inputs" />
+    <DayComponent v-if="inputs.length > 0" :inputs="inputs" :part="part" :day="day"/>
   </v-container>
 </template>
   
-  <script setup>
-import { ref } from "vue";
+<script setup>
+  import { ref } from "vue";
 
-defineProps({
-  day: {
-    type: Number,
-    required: true,
-  },
-  solution: {
-    type: Number,
-    required: false,
-    default: null
-  },
-});
+  const props = defineProps({
+    day: {
+      type: Number,
+      required: true,
+    },
+    part: {
+      type: Number,
+      required: false,
+      default: null,
+    },
+  });
 
-const text = ref("");
-const inputs = ref([]);
+  const text = ref("");
+  const inputs = ref([]);
 
-let DayComponent = null;
-let parseInput = null;
+  let DayComponent = null;
+  let parseInput = null;
 
-const loadDayModule = async () => {
-  const dayModule = await import(`@/components/days/${day}/day.vue`);
-  const parseModule = await import(
-    `@/components/days/${day}/parseInput.js`
-  );
-
-  DayComponent = dayModule.default;
-  parseInput = parseModule.parseInput;
-};
-
-const handleText = async () => {
-  if (!DayComponent || !parseInput) {
-    await loadDayModule();
-  }
-
-  inputs.value = parseInput(text.value);
-};
+  (async () => {
+    DayComponent = (await import(`@/components/days/${props.day}/day.vue`)).default
+    parseInput = (await import(`@/components/days/${props.day}/parseInput.js`)).parseInput
+    text.value = await (await fetch(`/inputs/${props.day}.txt`)).text()
+    inputs.value = parseInput(text.value);
+  })()
 </script>
-  
-  <style scoped>
-.mt-4 {
-  margin-top: 1rem;
-}
-</style>
-  
