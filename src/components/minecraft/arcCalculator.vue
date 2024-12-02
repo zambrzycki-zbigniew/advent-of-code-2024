@@ -239,9 +239,23 @@ export default {
               Math.ceil(scale / 2)
             );
           }
-        });
 
-        ctx.strokeStyle = "black";
+          if (showHelperLines.value) {
+            ctx.strokeStyle = "rgba(255, 0, 0, 0.5)";
+            ctx.strokeRect(
+              Math.round(canvas.value.width / 2 + sub.x * scale),
+              Math.round(
+                canvas.value.height -
+                  (sub.y + 0.5) * scale +
+                  (1.95 * r - b) * scale
+              ),
+              Math.ceil(scale / 2),
+              Math.ceil(scale / 2)
+            );
+          }
+        });
+        if (showHelperLines.value) ctx.strokeStyle = "rgba(222, 184, 135, 0.5)";
+        else ctx.strokeStyle = "black";
         ctx.lineWidth = 1;
         ctx.strokeRect(
           Math.round(canvas.value.width / 2 + square.x * scale),
@@ -255,7 +269,7 @@ export default {
         );
       });
       if (showHelperLines.value) {
-        ctx.strokeStyle = "white";
+        ctx.strokeStyle = "rgba(255, 255, 255, 0.5)";
         ctx.lineWidth = 2;
         ctx.beginPath();
         ctx.arc(
@@ -269,7 +283,7 @@ export default {
       }
 
       if (showHelperLines.value) {
-        ctx.strokeStyle = "yellow";
+        ctx.strokeStyle = "rgba(255, 255, 0, 0.5)";
         ctx.lineWidth = 2;
         ctx.beginPath();
         ctx.moveTo(
@@ -281,7 +295,7 @@ export default {
           canvas.value.height - chordY * scale + (1.95 * r - b) * scale
         );
         ctx.stroke();
-        ctx.strokeStyle = "blue";
+        ctx.strokeStyle = "rgba(0, 0, 255, 0.5)";
         ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.moveTo(
