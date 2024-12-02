@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router/auto';
+import { createRouter, createWebHashHistory } from 'vue-router/auto';
 import { setupLayouts } from 'virtual:generated-layouts';
 import { routes as autoRoutes } from 'vue-router/auto-routes';
 import GenericDayComponent from '@/pages/advent-of-code/day.vue'
@@ -35,7 +35,7 @@ const dayRoutes = Object.keys(dayFiles).map((filePath) => {
 const routes = setupLayouts([...autoRoutes, ...dayRoutes]);
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHashHistory(import.meta.env.BASE_URL),
   routes,
 });
 
