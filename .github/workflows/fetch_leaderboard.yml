@@ -5,6 +5,9 @@ on:
     - cron: '*/60 * * * *'
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   update-json:
     runs-on: ubuntu-latest
@@ -35,6 +38,5 @@ jobs:
           git add public/leaderboard.json
           git commit -m "Update leaderboard data"
           git push
-          # https://zambrzycki-zbigniew.github.io/advent-of-code-2024/public/leaderboard.json
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
