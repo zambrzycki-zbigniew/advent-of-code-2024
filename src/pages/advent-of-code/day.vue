@@ -36,7 +36,7 @@
   (async () => {
     DayComponent = (await import(`@/components/days/${props.day}/day.vue`)).default
     parseInput = (await import(`@/components/days/${props.day}/parseInput.js`)).parseInput
-    text.value = await (await fetch(`/inputs/${props.day}.txt`)).text()
+    text.value = await (await fetch(`/inputs/${props.day}.txt`).catch((reason) => console.log(reason))).text()
     inputs.value = parseInput(text.value);
   })()
 </script>
