@@ -26,17 +26,23 @@ jobs:
         run: |
           curl -s -H "Cookie: session=${AOC_SESSION}" https://adventofcode.com/2024/leaderboard/private/view/3744441.json -o leaderboard.json
 
-      - name: Update JSON file
+      - name: Extract Member Data
         run: |
-          mkdir -p public
-          mv leaderboard.json public/
+          python -c "
+          import json
+          with open('leaderboard.json') as f:
+              data = json.load(f)
+          member_data = data['members']['3788958']
+          with open('public/leaderboard_member_3788958.json', 'w') as f:
+              json.dump(member_data, f, indent=2)
+          "
 
       - name: Commit and Push changes
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add public/leaderboard.json
-          git commit -m "Update leaderboard data"
+          git add public/leaderboard_member_3788958.json
+          git commit -m "Update member data"
           git push
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
