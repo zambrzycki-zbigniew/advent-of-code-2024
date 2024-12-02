@@ -94,7 +94,7 @@ export default {
       Stairs: "Keep",
       Slab: "Keep",
       "Vertical slab": "Keep",
-      "Quater block": "Keep",
+      "Quarter block": "Keep",
       Empty: "Keep",
     });
 
@@ -117,7 +117,7 @@ export default {
       ) {
         square.shape = "Vertical slab";
       } else if (pointsAboveThreshold === 1) {
-        square.shape = "Quater block";
+        square.shape = "Quarter block";
       } else {
         square.shape = "Empty";
       }
