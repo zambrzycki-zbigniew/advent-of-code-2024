@@ -2,7 +2,6 @@
   <v-container>
     <v-row>
       <v-col cols="3">
-        <h2>Arc and Squares Visualization</h2>
         <v-text-field
           v-model="a"
           label="Chord Length (a)"
@@ -17,7 +16,6 @@
         />
       </v-col>
       <v-col cols="4">
-        <h2>Shape Strategies</h2>
         <div v-if="shapeStrategies">
           <v-row
             v-for="shape in Object.keys(shapeStrategies).filter(
@@ -42,7 +40,6 @@
         </div>
       </v-col>
       <v-col cols="5">
-        <h2>Display</h2>
         <v-list-item>
           <v-list-item-title>Helper lines</v-list-item-title>
           <v-list-item-action>
@@ -69,8 +66,6 @@
     </v-row>
 
     <v-divider class="my-4" />
-
-    <h2>Canvas Visualization:</h2>
     <canvas
       ref="canvas"
       width="600"
