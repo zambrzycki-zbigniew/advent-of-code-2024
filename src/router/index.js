@@ -2,6 +2,13 @@ import { createRouter, createWebHashHistory } from 'vue-router/auto';
 import { setupLayouts } from 'virtual:generated-layouts';
 import { routes as autoRoutes } from 'vue-router/auto-routes';
 import GenericDayComponent from '@/pages/advent-of-code/day.vue'
+import ArcCalculatorComponent from '@/pages/advent-of-code/day.vue'
+
+const arcCalculatorRoute = {
+  path: `/minecraft/arcCalculator`,
+  component: ArcCalculatorComponent,
+  name: "MinecraftArcCalculator"
+}
 
 const dayFiles = import.meta.glob('@/components/days/*/day.vue');
 const dayRoutes = Object.keys(dayFiles).map((filePath) => {
@@ -32,7 +39,7 @@ const dayRoutes = Object.keys(dayFiles).map((filePath) => {
   return [null];
 }).flat().filter(Boolean);
 
-const routes = setupLayouts([...autoRoutes, ...dayRoutes]);
+const routes = setupLayouts([...autoRoutes, ...dayRoutes, arcCalculatorRoute]);
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
