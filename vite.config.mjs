@@ -16,7 +16,7 @@ console.log('Alias @ resolves to:', fileURLToPath(new URL('./src', import.meta.u
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  // base: '/advent-of-code-2024/',
+  base: '/advent-of-code-2024/',
   build: {
     outDir: 'build',
     assetsDir: 'assets',
