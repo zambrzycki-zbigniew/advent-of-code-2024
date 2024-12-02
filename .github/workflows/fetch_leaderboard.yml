@@ -1,0 +1,41 @@
+name: Update GitHub Pages JSON
+
+on:
+  schedule:
+    - cron: '*/60 * * * *'
+  workflow_dispatch:
+
+jobs:
+  update-json:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Fetch Leaderboard Data
+        env:
+          AOC_SESSION: ${{ secrets.AOC_SESSION }}
+        run: |
+          curl -s -H "Cookie: session=${AOC_SESSION}" https://adventofcode.com/2024/leaderboard/private/view/3744441.json -o leaderboard.json
+
+      - name: Update JSON file
+        run: |
+          mkdir -p public
+          mv leaderboard.json public/
+
+      - name: Commit and Push changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add public/leaderboard.json
+          git commit -m "Update leaderboard data"
+          git push
+          # Używa automatycznego tokena GITHUB_TOKEN do wypchnięcia zmian
+          # https://zambrzycki-zbigniew.github.io/advent-of-code-2024/public/leaderboard.json
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
