@@ -35,7 +35,6 @@ jobs:
           git add public/leaderboard.json
           git commit -m "Update leaderboard data"
           git push
-          # Używa automatycznego tokena GITHUB_TOKEN do wypchnięcia zmian
           # https://zambrzycki-zbigniew.github.io/advent-of-code-2024/public/leaderboard.json
           env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
