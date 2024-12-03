@@ -3,8 +3,9 @@
 </template>
 
 <script setup>
+import { ref } from "vue"
 
-const example = ref([2, 4])
+const example = ref([161, 48])
 
 import DayComponent from "../day.vue"
 const props = defineProps({
