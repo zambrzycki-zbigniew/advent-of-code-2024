@@ -13,7 +13,6 @@ const arcCalculatorRoute = {
 const dayFiles = import.meta.glob('@/components/days/*/solve.js');
 const dayRoutes = Object.keys(dayFiles).map((filePath) => {
   const day = filePath.split('/days/')[1]?.split('/')[0];
-  console.log(day)
   if (day) {
     const dayNumber = parseInt(day, 10)
     return [
@@ -50,7 +49,6 @@ const router = createRouter({
 router.onError((err, to) => {
   if (err?.message?.includes?.('Failed to fetch dynamically imported module')) {
     if (!localStorage.getItem('vuetify:dynamic-reload')) {
-      console.log('Reloading page to fix dynamic import error');
       localStorage.setItem('vuetify:dynamic-reload', 'true');
       location.assign(to.fullPath);
     } else {

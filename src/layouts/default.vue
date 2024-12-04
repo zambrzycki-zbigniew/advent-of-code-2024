@@ -88,7 +88,6 @@ async function getLeaderboardData() {
       const contentType = response.headers.get("content-type");
       if (contentType && contentType.includes("application/json")) {
         const data = await response.json();
-        console.log("Data fetched successfully:", data.completion_day_level);
         completion_day_level.value = data.completion_day_level;
         return;
       } else if (contentType && contentType.includes("text/html")) {

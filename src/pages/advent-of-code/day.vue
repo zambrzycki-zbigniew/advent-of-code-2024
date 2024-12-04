@@ -332,7 +332,6 @@ const loadDayData = async (day) => {
     }
 
     inputs.value = parseInput.value(text.value);
-    console.log("differentExamples.value", differentExamples.value);
     if (differentExamples.value)
       exampleInputs.value = [
         parseInput.value(exampleTexts.value[0]),

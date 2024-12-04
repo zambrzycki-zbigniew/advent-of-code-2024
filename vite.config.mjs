@@ -11,12 +11,8 @@ import Vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
 import { defineConfig } from 'vite'
 import { fileURLToPath, URL } from 'node:url'
 
-
-console.log('Alias @ resolves to:', fileURLToPath(new URL('./src', import.meta.url)));
-
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
-  console.log(mode)
   const base = mode === 'production' ? '/advent-of-code-2024/' : '/';
   return {
     base,

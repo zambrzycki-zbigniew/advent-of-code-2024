@@ -177,8 +177,7 @@ const checkSolutions = async () => {
     `@/components/days/${props.day}/parseInput.js`
   );
   let peekInput = parseModule.parseInput(peekInputText.value);
-  console.log(JSON.parse(JSON.stringify(peekInput)) === JSON.parse(JSON.stringify(props.inputs)))
-  if (true || JSON.parse(JSON.stringify(peekInput)) === JSON.parse(JSON.stringify(props.inputs))) {
+  if (JSON.stringify(peekInput) === JSON.stringify(props.inputs)) {
     peekBanter.value = "'aight, let me see...'";
     peekLoading.value = true;
     worker.postMessage({
@@ -201,14 +200,7 @@ onMounted(() => {
 
   worker.onmessage = (event) => {
     isCalculating.value = false;
-    console.log(event);
     if (event.data.peek) {
-      console.log(
-        peekPart1Solution.value === event.data.result[0],
-        peekPart2Solution.value === event.data.result[1],
-        peekPart1Solution.value, event.data.result[0],
-        peekPart2Solution.value, event.data.result[1]
-      )
       if (
         parseInt(peekPart1Solution.value) === event.data.result[0] &&
         parseInt(peekPart2Solution.value) === event.data.result[1]

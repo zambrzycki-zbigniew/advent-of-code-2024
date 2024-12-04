@@ -1,10 +1,6 @@
 export function solvePart1(input) {
-    let debug = false
-    if(input === 'xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))') debug = true
-    if(debug) console.log(input)
     const pairs = input.split('mul(').map((str, ind) => {
         if (ind === 0) return null
-        if(debug) console.log(str)
         let bracketIndex = str.indexOf(")")
         if (bracketIndex <= 2) return null
         let cutStr = str.slice(0, bracketIndex)
