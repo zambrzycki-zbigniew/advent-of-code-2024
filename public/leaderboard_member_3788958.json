@@ -1,4 +1,6 @@
 {
+  "global_score": 0,
+  "name": "zbigniew-zambrzycki",
   "completion_day_level": {
     "3": {
       "1": {
@@ -10,16 +12,6 @@
         "star_index": 536317
       }
     },
-    "1": {
-      "1": {
-        "get_star_ts": 1733060071,
-        "star_index": 0
-      },
-      "2": {
-        "star_index": 1369,
-        "get_star_ts": 1733060539
-      }
-    },
     "2": {
       "2": {
         "star_index": 240897,
@@ -29,12 +21,20 @@
         "star_index": 237077,
         "get_star_ts": 1733139446
       }
+    },
+    "1": {
+      "1": {
+        "get_star_ts": 1733060071,
+        "star_index": 0
+      },
+      "2": {
+        "get_star_ts": 1733060539,
+        "star_index": 1369
+      }
     }
   },
-  "local_score": 47,
   "last_star_ts": 1733222539,
-  "name": "zbigniew-zambrzycki",
+  "local_score": 47,
   "id": 3788958,
-  "global_score": 0,
   "stars": 6
 }
