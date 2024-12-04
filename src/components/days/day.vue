@@ -179,7 +179,13 @@ const checkSolutions = async () => {
     `@/components/days/${props.day}/parseInput.js`
   );
   let peekInput = parseModule.parseInput(peekInputText.value);
-  if (!((peekPart1Solution.value === result[0] && peekPart2Solution.value === result[1]) || JSON.stringify(peekInput) === JSON.stringify(props.inputs))) {
+  if (
+    !(
+      (parseInt(peekPart1Solution.value) === parseInt(result.value[0]) &&
+        parseInt(peekPart2Solution.value) === parseInt(result.value[1])) ||
+      JSON.stringify(peekInput) === JSON.stringify(props.inputs)
+    )
+  ) {
     peekBanter.value = "'aight, let me see...";
     peekPromise.value = new Promise((r) => setTimeout(r, 1000));
     peekLoading.value = true;
