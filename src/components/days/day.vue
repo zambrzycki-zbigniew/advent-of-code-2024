@@ -89,10 +89,11 @@
 
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn variant="text" @click="closeDialog">{{allowPeek ? 'Exit' : 'Cancel'}}</v-btn>
+        <v-btn variant="text" @click="closeDialog">{{
+          allowPeek ? "Exit" : "Cancel"
+        }}</v-btn>
         <v-btn
-          variant="elevated"
-          color="primary"
+          variant="text"
           :loading="peekLoading"
           :disabled="peekLoading || allowPeek"
           v-if="!allowPeek"
@@ -164,6 +165,7 @@ const peekPart1Solution = ref(null);
 const peekPart2Solution = ref(null);
 const allowPeek = ref(false);
 const peekLoading = ref(false);
+const peekPromise = ref(new Promise((r) => r));
 const peekBanter = ref(
   "There's a toll on this road—you need to provide your input and solutions before you can check how I got mine!"
 );
@@ -178,7 +180,8 @@ const checkSolutions = async () => {
   );
   let peekInput = parseModule.parseInput(peekInputText.value);
   if (JSON.stringify(peekInput) !== JSON.stringify(props.inputs)) {
-    peekBanter.value = "'aight, let me see...'";
+    peekBanter.value = "'aight, let me see...";
+    peekPromise.value = new Promise((r) => setTimeout(r, 1000));
     peekLoading.value = true;
     worker.postMessage({
       day: props.day,
@@ -201,17 +204,19 @@ onMounted(() => {
   worker.onmessage = (event) => {
     isCalculating.value = false;
     if (event.data.peek) {
-      if (
-        parseInt(peekPart1Solution.value) === event.data.result[0] &&
-        parseInt(peekPart2Solution.value) === event.data.result[1]
-      ) {
-        allowPeek.value = true;
-        peekLoading.value = false;
-        peekBanter.value = "Okay, looks fine. Get on with it then!";
-      } else {
-        peekLoading.value = false;
-        peekBanter.value = "... I don't like 'em.";
-      }
+      peekPromise.value.then(() => {
+        if (
+          parseInt(peekPart1Solution.value) === event.data.result[0] &&
+          parseInt(peekPart2Solution.value) === event.data.result[1]
+        ) {
+          allowPeek.value = true;
+          peekLoading.value = false;
+          peekBanter.value = "Okay, looks fine. Get on with it then!";
+        } else {
+          peekLoading.value = false;
+          peekBanter.value = "... I don't like 'em.";
+        }
+      });
     } else {
       if (event.data.example !== undefined) {
         exampleResult.value = event.data.example;
