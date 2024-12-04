@@ -10,9 +10,10 @@ const arcCalculatorRoute = {
   name: "MinecraftArcCalculator"
 }
 
-const dayFiles = import.meta.glob('@/components/days/*/day.vue');
+const dayFiles = import.meta.glob('@/components/days/*/solve.js');
 const dayRoutes = Object.keys(dayFiles).map((filePath) => {
   const day = filePath.split('/days/')[1]?.split('/')[0];
+  console.log(day)
   if (day) {
     const dayNumber = parseInt(day, 10)
     return [

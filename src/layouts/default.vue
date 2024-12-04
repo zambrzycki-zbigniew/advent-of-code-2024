@@ -134,7 +134,7 @@ function getStarColor(day, part) {
   return star;
 }
 
-const dayFiles = import.meta.glob("@/components/days/*/day.vue");
+const dayFiles = import.meta.glob("@/components/days/*/solve.js");
 const dayNumbers = Array.from({ length: 25 }, (_, i) => i + 1);
 const days = ref(
   Object.keys(dayFiles)

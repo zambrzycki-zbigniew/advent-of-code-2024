@@ -207,6 +207,7 @@
         :day="day"
         :differentExamples="differentExamples"
         :dataLoaded="dataLoaded"
+        :rawInput="text"
         @onExample="handleExampleResults"
       />
     </v-container>
@@ -215,6 +216,7 @@
 
 <script setup>
 import { ref, watch } from "vue";
+import DayComponent from "@/components/days/day.vue"
 
 const props = defineProps({
   day: {
@@ -233,7 +235,7 @@ const exampleText = ref("");
 const exampleTexts = ref(["", ""]);
 const inputs = ref([]);
 const exampleInputs = ref([]);
-const DayComponent = shallowRef(null);
+// const DayComponent = shallowRef(null);
 const parseInput = ref(null);
 const differentExamples = ref(false);
 const dataLoaded = ref(false);
@@ -269,8 +271,8 @@ const loadDayData = async (day) => {
   exampleText.value = "";
   exampleTexts.value = ["", ""];
   try {
-    const dayModule = await import(`@/components/days/${day}/day.vue`);
-    DayComponent.value = dayModule.default;
+    // const dayModule = await import(`@/components/days/${day}/day.vue`);
+    // DayComponent.value = dayModule.default;
 
     const parseModule = await import(`@/components/days/${day}/parseInput.js`);
     parseInput.value = parseModule.parseInput;

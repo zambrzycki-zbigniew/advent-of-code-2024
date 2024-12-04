@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex">
-    <v-card  class="my-1" density="compact">
+    <v-card class="my-1" density="compact">
       <v-card-subtitle class="mt-1 d-flex align-center">
         <!-- <v-icon icon="mdi-check" color="success" /> -->
         <span>Part 1</span></v-card-subtitle
@@ -9,7 +9,8 @@
         <v-container class="ma-0 pa-0 ml-3" min-width="150px">
           <v-row>
             <v-col>
-              <div v-if="result[0]">{{ result[0] }}</div> <v-progress-circular indeterminate v-else/>
+              <div v-if="result[0]">{{ result[0] }}</div>
+              <v-progress-circular indeterminate v-else />
             </v-col>
           </v-row>
         </v-container>
@@ -24,17 +25,96 @@
         <v-container class="ma-0 pa-0 ml-3" min-width="150px">
           <v-row>
             <v-col>
-              <div v-if="result[1]">{{ result[1] }}</div> <v-progress-circular indeterminate v-else/>
+              <div v-if="result[1]">{{ result[1] }}</div>
+              <v-progress-circular indeterminate v-else />
             </v-col>
           </v-row>
         </v-container>
       </v-card-text>
     </v-card>
+    <v-btn
+      class="my-1 ml-1"
+      height="auto"
+      @click="showcaseDialog = true"
+      v-if="!allowPeek"
+      >Show solution</v-btn
+    >
   </div>
+  <Showcase :day="day" v-if="allowPeek" />
+  <v-dialog v-model="showcaseDialog" max-width="800px">
+    <v-card>
+      <v-card-title>
+        <span class="text-h6">Hold on there, partner!</span>
+      </v-card-title>
+      <v-card-text>
+        <v-container>
+          <v-row>
+            <!-- Left column for image -->
+            <v-col cols="5">
+              <span> {{ peekBanter }}</span>
+              <v-img src="@/assets/elf.png" max-height="600px" contain></v-img>
+            </v-col>
+
+            <!-- Right column for inputs -->
+            <v-col cols="7">
+              <v-textarea
+                v-model="peekInputText"
+                label="Your Input"
+                rows="20"
+                outlined
+              ></v-textarea>
+
+              <v-row class="mt-4">
+                <v-col>
+                  <v-text-field
+                    v-model="peekPart1Solution"
+                    label="Your Part 1 Solution"
+                    type="number"
+                    outlined
+                  ></v-text-field>
+                </v-col>
+                <v-col>
+                  <v-text-field
+                    v-model="peekPart2Solution"
+                    label="Your Part 2 Solution"
+                    type="number"
+                    outlined
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+            </v-col>
+          </v-row>
+        </v-container>
+      </v-card-text>
+
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn variant="text" @click="closeDialog">{{allowPeek ? 'Exit' : 'Cancel'}}</v-btn>
+        <v-btn
+          variant="elevated"
+          color="primary"
+          :loading="peekLoading"
+          :disabled="peekLoading || allowPeek"
+          v-if="!allowPeek"
+          @click="checkSolutions"
+        >
+          Check
+        </v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </template>
   
   <script setup>
 import { ref, onMounted, watch, onUnmounted } from "vue";
+import Showcase from "../showcase.vue";
+
+const examples = {
+  1: [11, 31],
+  2: [2, 4],
+  3: [161, 48],
+  4: [18, 9],
+};
 
 const props = defineProps({
   inputs: {
@@ -54,10 +134,6 @@ const props = defineProps({
     type: Number,
     required: true,
   },
-  example: {
-    type: Array,
-    required: true,
-  },
   differentExamples: {
     type: Boolean,
     required: true,
@@ -66,7 +142,15 @@ const props = defineProps({
     type: Boolean,
     required: true,
   },
+  rawInput: {
+    type: String,
+    required: true,
+  },
 });
+
+const example = examples[props.day];
+
+const showcaseDialog = ref(false);
 
 const emit = defineEmits(["onExample"]);
 const exampleResult = ref([null, null]);
@@ -74,6 +158,41 @@ const exampleResult = ref([null, null]);
 const result = ref([null, null]);
 const isCalculating = ref(false);
 let worker;
+
+const peekInputText = ref("");
+const peekPart1Solution = ref(null);
+const peekPart2Solution = ref(null);
+const allowPeek = ref(false);
+const peekLoading = ref(false);
+const peekBanter = ref(
+  "There's a toll on this road—you need to provide your input and solutions before you can check how I got mine!"
+);
+
+const closeDialog = () => {
+  showcaseDialog.value = false;
+};
+
+const checkSolutions = async () => {
+  const parseModule = await import(
+    `@/components/days/${props.day}/parseInput.js`
+  );
+  let peekInput = parseModule.parseInput(peekInputText.value);
+  console.log(JSON.parse(JSON.stringify(peekInput)) === JSON.parse(JSON.stringify(props.inputs)))
+  if (true || JSON.parse(JSON.stringify(peekInput)) === JSON.parse(JSON.stringify(props.inputs))) {
+    peekBanter.value = "'aight, let me see...'";
+    peekLoading.value = true;
+    worker.postMessage({
+      day: props.day,
+      inputs: JSON.parse(JSON.stringify(peekInput)),
+      part: null,
+      differentExamples: false,
+      peek: true,
+    });
+  } else {
+    peekBanter.value =
+      "Trying to swindle an elf with a gun using his own solutions? No wonder you couldn't come up with your own!";
+  }
+};
 
 onMounted(() => {
   worker = new Worker(new URL("@/workers/solveWorker.js", import.meta.url), {
@@ -83,14 +202,37 @@ onMounted(() => {
   worker.onmessage = (event) => {
     isCalculating.value = false;
     console.log(event);
-    if (event.data.example !== undefined) {
-      exampleResult.value = event.data.example;
-      emit("onExample", exampleResult.value);
-    }
-    if (event.data.result !== undefined) {
-      result.value = event.data.result;
-    } else if (event.data.error) {
-      console.error(event.data.error);
+    if (event.data.peek) {
+      console.log(
+        peekPart1Solution.value === event.data.result[0],
+        peekPart2Solution.value === event.data.result[1],
+        peekPart1Solution.value, event.data.result[0],
+        peekPart2Solution.value, event.data.result[1]
+      )
+      if (
+        parseInt(peekPart1Solution.value) === event.data.result[0] &&
+        parseInt(peekPart2Solution.value) === event.data.result[1]
+      ) {
+        allowPeek.value = true;
+        peekLoading.value = false;
+        peekBanter.value = "Okay, looks fine. Get on with it then!";
+      } else {
+        peekLoading.value = false;
+        peekBanter.value = "... I don't like 'em.";
+      }
+    } else {
+      if (event.data.example !== undefined) {
+        exampleResult.value = event.data.example;
+        emit("onExample", [
+          [exampleResult.value[0], example[0]],
+          [exampleResult.value[1], example[1]],
+        ]);
+      }
+      if (event.data.result !== undefined) {
+        result.value = event.data.result;
+      } else if (event.data.error) {
+        console.error(event.data.error);
+      }
     }
   };
 
@@ -108,6 +250,7 @@ onMounted(() => {
       props.dataLoaded,
     ],
     ([newInputs, newPart, newExample, newDifferentExamples, newDataLoaded]) => {
+      allowPeek.value = false;
       if (newInputs && newDataLoaded) {
         isCalculating.value = true;
         worker.postMessage({
