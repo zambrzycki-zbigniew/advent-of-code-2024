@@ -180,7 +180,7 @@ const checkSolutions = async () => {
   );
   let peekInput = parseModule.parseInput(peekInputText.value);
   if (
-    !(
+    (
       (parseInt(peekPart1Solution.value) === parseInt(result.value[0]) &&
         parseInt(peekPart2Solution.value) === parseInt(result.value[1])) ||
       JSON.stringify(peekInput) === JSON.stringify(props.inputs)

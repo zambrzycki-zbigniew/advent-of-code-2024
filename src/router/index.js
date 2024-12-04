@@ -1,20 +1,20 @@
 import { createRouter, createWebHashHistory } from 'vue-router/auto';
 import { setupLayouts } from 'virtual:generated-layouts';
 import { routes as autoRoutes } from 'vue-router/auto-routes';
-import GenericDayComponent from '@/pages/advent-of-code/day.vue'
-import ArcCalculatorComponent from '@/pages/advent-of-code/day.vue'
+import GenericDayComponent from '@/pages/advent-of-code/day.vue';
+import ArcCalculatorComponent from '@/pages/advent-of-code/day.vue';
 
 const arcCalculatorRoute = {
   path: `/minecraft/arcCalculator`,
   component: ArcCalculatorComponent,
-  name: "MinecraftArcCalculator"
-}
+  name: "MinecraftArcCalculator",
+};
 
 const dayFiles = import.meta.glob('@/components/days/*/solve.js');
 const dayRoutes = Object.keys(dayFiles).map((filePath) => {
   const day = filePath.split('/days/')[1]?.split('/')[0];
   if (day) {
-    const dayNumber = parseInt(day, 10)
+    const dayNumber = parseInt(day, 10);
     return [
       {
         path: `/days/${dayNumber}`,
@@ -34,12 +34,20 @@ const dayRoutes = Object.keys(dayFiles).map((filePath) => {
         name: `Day${dayNumber}Part2`,
         props: { day: dayNumber, part: 2 },
       },
-    ]
+    ];
   }
   return [null];
 }).flat().filter(Boolean);
 
-const routes = setupLayouts([...autoRoutes, ...dayRoutes, arcCalculatorRoute]);
+const routes = setupLayouts([
+  {
+    path: '/',
+    redirect: '/days/1', // Add redirect at the root path
+  },
+  ...autoRoutes,
+  ...dayRoutes,
+  arcCalculatorRoute,
+]);
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
