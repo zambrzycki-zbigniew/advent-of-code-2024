@@ -177,7 +177,7 @@ const checkSolutions = async () => {
     `@/components/days/${props.day}/parseInput.js`
   );
   let peekInput = parseModule.parseInput(peekInputText.value);
-  if (JSON.stringify(peekInput) === JSON.stringify(props.inputs)) {
+  if (JSON.stringify(peekInput) !== JSON.stringify(props.inputs)) {
     peekBanter.value = "'aight, let me see...'";
     peekLoading.value = true;
     worker.postMessage({
