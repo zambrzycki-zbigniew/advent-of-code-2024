@@ -9,9 +9,9 @@ export function parseInput(input) {
         dict[after].before[before] = true
         return dict
     }, {})
-    const updates = updatesRaw.split('\n').map(updateRow => {
+    const updates = updatesRaw ? updatesRaw.split('\n').map(updateRow => {
         const pages = updateRow.split(',')
         return pages
-    })
+    }) : []
     return [rules, updates]
 }
