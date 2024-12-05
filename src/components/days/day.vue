@@ -110,13 +110,6 @@
 import { ref, onMounted, watch, onUnmounted } from "vue";
 import Showcase from "../showcase.vue";
 
-const examples = {
-  1: [11, 31],
-  2: [2, 4],
-  3: [161, 48],
-  4: [18, 9],
-  5: [143, 123],
-};
 
 const props = defineProps({
   inputs: {
@@ -150,7 +143,6 @@ const props = defineProps({
   },
 });
 
-const example = examples[props.day];
 
 const showcaseDialog = ref(false);
 
@@ -228,8 +220,8 @@ onMounted(() => {
       if (event.data.example !== undefined) {
         exampleResult.value = event.data.example;
         emit("onExample", [
-          [exampleResult.value[0], example[0]],
-          [exampleResult.value[1], example[1]],
+          [exampleResult.value[0]],
+          [exampleResult.value[1]],
         ]);
       }
       if (event.data.result !== undefined) {

@@ -11,6 +11,23 @@ const arcCalculatorRoute = {
 };
 
 const dayFiles = import.meta.glob('@/components/days/*/solve.js');
+
+let examplesData = {};
+async function fetchExamples() {
+  try {
+
+    let url = process.env.NODE_ENV === "production" ? `/advent-of-code-2024/examples.json` : `/examples.json`
+    const response = await fetch(url);
+    try {
+      examplesData = await response.json()
+    } catch (err) {
+      console.error(err)
+    }
+  } catch (error) {
+    console.error('Error fetching examples.json:', error);
+  }
+}
+
 const dayRoutes = Object.keys(dayFiles).map((filePath) => {
   const day = filePath.split('/days/')[1]?.split('/')[0];
   if (day) {
@@ -20,19 +37,42 @@ const dayRoutes = Object.keys(dayFiles).map((filePath) => {
         path: `/days/${dayNumber}`,
         component: GenericDayComponent,
         name: `Day${dayNumber}`,
-        props: { day: dayNumber },
+        props: (route) => ({
+          day: dayNumber,
+          examples: examplesData[dayNumber] || [],
+        }),
+        beforeEnter: async (to, from, next) => {
+          await fetchExamples();
+          next();
+        },
       },
       {
         path: `/days/${dayNumber}/part/1`,
         component: GenericDayComponent,
         name: `Day${dayNumber}Part1`,
-        props: { day: dayNumber, part: 1 },
+        props: (route) => ({
+          day: dayNumber,
+          part: 1,
+          examples: examplesData[dayNumber] || [],
+        }),
+        beforeEnter: async (to, from, next) => {
+          await fetchExamples();
+          next();
+        },
       },
       {
         path: `/days/${dayNumber}/part/2`,
         component: GenericDayComponent,
         name: `Day${dayNumber}Part2`,
-        props: { day: dayNumber, part: 2 },
+        props: (route) => ({
+          day: dayNumber,
+          part: 2,
+          examples: examplesData[dayNumber] || [],
+        }),
+        beforeEnter: async (to, from, next) => {
+          await fetchExamples();
+          next();
+        },
       },
     ];
   }
@@ -42,7 +82,7 @@ const dayRoutes = Object.keys(dayFiles).map((filePath) => {
 const routes = setupLayouts([
   {
     path: '/',
-    redirect: '/days/1', // Add redirect at the root path
+    redirect: '/days/1',
   },
   ...autoRoutes,
   ...dayRoutes,

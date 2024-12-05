@@ -14,7 +14,7 @@
           <v-card v-if="exampleResults[0]" class="my-1 mr-1" density="compact">
             <v-card-subtitle class="mt-1 pl-0 d-flex align-center">
               <v-icon
-                v-if="exampleResults[0][0] === exampleResults[0][1]"
+                v-if="exampleResults[0][0] === examples[0]"
                 icon="mdi-check"
                 color="success"
               />
@@ -29,13 +29,11 @@
                     <div>Calculated</div>
                   </v-col>
                   <v-col>
-                    <div>{{ exampleResults[0][1] }}</div>
+                    <div>{{ examples[0] }}</div>
                     <div
                       :style="{
                         color:
-                          exampleResults[0][0] === exampleResults[0][1]
-                            ? 'lime'
-                            : 'red',
+                          exampleResults[0][0] === examples[0] ? 'lime' : 'red',
                       }"
                     >
                       {{ exampleResults[0][0] }}
@@ -49,7 +47,7 @@
           <v-card v-if="exampleResults[1]" class="my-1" density="compact">
             <v-card-subtitle class="mt-1 pl-0 d-flex align-center">
               <v-icon
-                v-if="exampleResults[1][0] === exampleResults[1][1]"
+                v-if="exampleResults[1][0] === examples[1]"
                 icon="mdi-check"
                 color="success"
               />
@@ -64,13 +62,11 @@
                     <div>Calculated</div>
                   </v-col>
                   <v-col>
-                    <div>{{ exampleResults[1][1] }}</div>
+                    <div>{{ examples[1] }}</div>
                     <div
                       :style="{
                         color:
-                          exampleResults[1][0] === exampleResults[1][1]
-                            ? 'lime'
-                            : 'red',
+                          exampleResults[1][0] === examples[1] ? 'lime' : 'red',
                       }"
                     >
                       {{ exampleResults[1][0] }}
@@ -96,7 +92,7 @@
           <v-card v-if="exampleResults[0]" class="my-1" density="compact">
             <v-card-subtitle class="mt-1 pl-0 d-flex align-center">
               <v-icon
-                v-if="exampleResults[0][0] === exampleResults[0][1]"
+                v-if="exampleResults[0][0] === examples[0]"
                 icon="mdi-check"
                 color="success"
               />
@@ -111,13 +107,11 @@
                     <div>Calculated</div>
                   </v-col>
                   <v-col>
-                    <div>{{ exampleResults[0][1] }}</div>
+                    <div>{{ examples[0] }}</div>
                     <div
                       :style="{
                         color:
-                          exampleResults[0][0] === exampleResults[0][1]
-                            ? 'lime'
-                            : 'red',
+                          exampleResults[0][0] === examples[0] ? 'lime' : 'red',
                       }"
                     >
                       {{ exampleResults[0][0] }}
@@ -141,7 +135,7 @@
           <v-card v-if="exampleResults[1]" class="my-1" density="compact">
             <v-card-subtitle class="mt-1 pl-0 d-flex align-center">
               <v-icon
-                v-if="exampleResults[1][0] === exampleResults[1][1]"
+                v-if="exampleResults[1][0] === examples[1]"
                 icon="mdi-check"
                 color="success"
               />
@@ -156,13 +150,11 @@
                     <div>Calculated</div>
                   </v-col>
                   <v-col>
-                    <div>{{ exampleResults[1][1] }}</div>
+                    <div>{{ examples[1] }}</div>
                     <div
                       :style="{
                         color:
-                          exampleResults[1][0] === exampleResults[1][1]
-                            ? 'lime'
-                            : 'red',
+                          exampleResults[1][0] === examples[1] ? 'lime' : 'red',
                       }"
                     >
                       {{ exampleResults[1][0] }}
@@ -216,7 +208,7 @@
 
 <script setup>
 import { ref, watch } from "vue";
-import DayComponent from "@/components/days/day.vue"
+import DayComponent from "@/components/days/day.vue";
 
 const props = defineProps({
   day: {
@@ -227,6 +219,10 @@ const props = defineProps({
     type: Number,
     required: false,
     default: null,
+  },
+  examples: {
+    type: Array,
+    required: true,
   },
 });
 
@@ -271,66 +267,39 @@ const loadDayData = async (day) => {
   exampleText.value = "";
   exampleTexts.value = ["", ""];
   try {
-    // const dayModule = await import(`@/components/days/${day}/day.vue`);
-    // DayComponent.value = dayModule.default;
-
     const parseModule = await import(`@/components/days/${day}/parseInput.js`);
     parseInput.value = parseModule.parseInput;
-
-    const fetchUrls = [
-      `/advent-of-code-2024/inputs/${day}.txt`,
-      `/inputs/${day}.txt`,
-    ];
-    const fetchExampleUrls = [
-      `/advent-of-code-2024/inputs/${day}example.txt`,
-      `/inputs/${day}example.txt`,
-    ];
-    const fetchExamplePart1Urls = [
-      `/advent-of-code-2024/inputs/${day}example1.txt`,
-      `/inputs/${day}example1.txt`,
-    ];
-    const fetchExamplePart2Urls = [
-      `/advent-of-code-2024/inputs/${day}example2.txt`,
-      `/inputs/${day}example2.txt`,
-    ];
-
-    for (const url of fetchUrls) {
-      const response = await fetch(url);
-      const fetchedText = await response.text();
-      if (!fetchedText.includes("<!DOCTYPE html>")) {
-        text.value = fetchedText;
-      }
-    }
-
-    for (const url of fetchExampleUrls) {
-      const response = await fetch(url);
-      const fetchedText = await response.text();
-      if (!fetchedText.includes("<!DOCTYPE html>")) {
-        exampleText.value = fetchedText;
-        break;
-      }
-    }
-
-    if (exampleText.value === "") {
-      differentExamples.value = true;
-      for (const url of fetchExamplePart1Urls) {
-        const response = await fetch(url);
-        const fetchedText = await response.text();
-        if (!fetchedText.includes("<!DOCTYPE html>")) {
-          exampleTexts.value[0] = fetchedText;
-          break;
-        }
-      }
-      for (const url of fetchExamplePart2Urls) {
-        const response = await fetch(url);
-        const fetchedText = await response.text();
-        if (!fetchedText.includes("<!DOCTYPE html>")) {
-          exampleTexts.value[1] = fetchedText;
-          break;
-        }
-      }
-    }
-
+    const inputUrl =
+      process.env.NODE_ENV === "production"
+        ? `/advent-of-code-2024/inputs/${day}.txt`
+        : `/inputs/${day}.txt`;
+    const exampleUrl =
+      process.env.NODE_ENV === "production"
+        ? `/advent-of-code-2024/inputs/${day}example.txt`
+        : `/inputs/${day}example.txt`;
+    const examplePart1Url =
+      process.env.NODE_ENV === "production"
+        ? `/advent-of-code-2024/inputs/${day}example1.txt`
+        : `/inputs/${day}example1.txt`;
+    const examplePart2Url =
+      process.env.NODE_ENV === "production"
+        ? `/advent-of-code-2024/inputs/${day}example2.txt`
+        : `/inputs/${day}example2.txt`;
+    text.value = await (await fetch(inputUrl)).text();
+    exampleText.value = await (await fetch(exampleUrl))
+      .text()
+      .catch(() => null);
+    exampleTexts.value[0] = await (await fetch(examplePart1Url))
+      .text()
+      .catch(() => null);
+    exampleTexts.value[1] = await (await fetch(examplePart2Url))
+      .text()
+      .catch(() => null);
+    differentExamples.value =
+      !!exampleTexts.value[0] &&
+      !exampleTexts.value[0].includes("<!DOCTYPE html>") &&
+      !!exampleTexts.value[1] &&
+      !exampleTexts.value[1].includes("<!DOCTYPE html>");
     inputs.value = parseInput.value(text.value);
     if (differentExamples.value)
       exampleInputs.value = [
@@ -342,6 +311,7 @@ const loadDayData = async (day) => {
   } catch (error) {
     console.error(`Failed to load data for day ${day}:`, error);
   }
+  console.log(props.examples);
 };
 
 watch(
