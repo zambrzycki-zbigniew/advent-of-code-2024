@@ -115,6 +115,7 @@ const examples = {
   2: [2, 4],
   3: [161, 48],
   4: [18, 9],
+  5: [143, 123],
 };
 
 const props = defineProps({
