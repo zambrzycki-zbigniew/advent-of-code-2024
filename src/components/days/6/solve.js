@@ -102,7 +102,6 @@ function testForLoop(initialGuardPosition, area, previouslyVisitedSpots, leastSt
     visitedSpots[guardLocation][area[guardLocation]] = path.length
     path.push({ pos: guardLocation, dir: area[guardLocation] })
     let guardCoordinates = guardLocation.split(':').map(c => parseInt(c))
-    // console.log(guardLocation, area[guardLocation], direction[area[guardLocation]])
     let nextDelta = direction[area[guardLocation]].d
     let nextLocation = [guardCoordinates[0] + nextDelta[0], guardCoordinates[1] + nextDelta[1]].join(':')
     if (area[nextLocation] !== undefined && (area[nextLocation] === "#" || area[nextLocation] === "O")) {
@@ -112,7 +111,8 @@ function testForLoop(initialGuardPosition, area, previouslyVisitedSpots, leastSt
     while (area[nextLocation]) {
         if (previouslyVisitedSpots[nextLocation] &&
             previouslyVisitedSpots[nextLocation][area[nextLocation]] &&
-            previouslyVisitedSpots[nextLocation][area[nextLocation]] < leastStepsToObstruction) return true
+            previouslyVisitedSpots[nextLocation][area[nextLocation]] < leastStepsToObstruction)
+            return true
         nextDelta = direction[area[guardLocation]].d
         nextLocation = [guardCoordinates[0] + nextDelta[0], guardCoordinates[1] + nextDelta[1]].join(':')
         if (area[nextLocation] !== undefined && (area[nextLocation] === "#" || area[nextLocation] === "O")) {

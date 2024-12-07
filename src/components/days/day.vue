@@ -110,7 +110,6 @@
 import { ref, onMounted, watch, onUnmounted } from "vue";
 import Showcase from "../showcase.vue";
 
-
 const props = defineProps({
   inputs: {
     type: Array,
@@ -143,7 +142,6 @@ const props = defineProps({
   },
 });
 
-
 const showcaseDialog = ref(false);
 
 const emit = defineEmits(["onExample"]);
@@ -156,6 +154,7 @@ let worker;
 const peekInputText = ref("");
 const peekPart1Solution = ref(null);
 const peekPart2Solution = ref(null);
+const peekSolutions = ref([null, null]);
 const allowPeek = ref(false);
 const peekLoading = ref(false);
 const peekPromise = ref(new Promise((r) => r));
@@ -168,30 +167,41 @@ const closeDialog = () => {
 };
 
 const checkSolutions = async () => {
-  const parseModule = await import(
-    `@/components/days/${props.day}/parseInput.js`
-  );
-  let peekInput = parseModule.parseInput(peekInputText.value);
-  if (
-    !(
-      (parseInt(peekPart1Solution.value) === parseInt(result.value[0]) &&
-        parseInt(peekPart2Solution.value) === parseInt(result.value[1])) ||
-      JSON.stringify(peekInput) === JSON.stringify(props.inputs)
-    )
-  ) {
-    peekBanter.value = "'aight, let me see...";
-    peekPromise.value = new Promise((r) => setTimeout(r, 1000));
-    peekLoading.value = true;
-    worker.postMessage({
-      day: props.day,
-      inputs: JSON.parse(JSON.stringify(peekInput)),
-      part: null,
-      differentExamples: false,
-      peek: true,
-    });
-  } else {
+  try {
+    const parseModule = await import(
+      `@/components/days/${props.day}/parseInput.js`
+    );
+    let peekInput = parseModule.parseInput(peekInputText.value);
+    const part1Correct =
+      parseInt(peekPart1Solution.value) === parseInt(result.value[0]);
+    const part2Correct =
+      parseInt(peekPart2Solution.value) === parseInt(result.value[1]);
+    const inputMatches =
+      JSON.stringify(peekInput) === JSON.stringify(props.inputs);
+    if (!(part1Correct && part2Correct) && !inputMatches) {
+      peekBanter.value = "'aight, let me see...";
+      peekPromise.value = new Promise((resolve) => setTimeout(resolve, 1000));
+      peekLoading.value = true;
+      worker.postMessage({
+        type: "solvePart1",
+        day: props.day,
+        inputs: JSON.parse(JSON.stringify(peekInput)),
+        peek: true,
+      });
+      worker.postMessage({
+        type: "solvePart2",
+        day: props.day,
+        inputs: JSON.parse(JSON.stringify(peekInput)),
+        peek: true,
+      });
+    } else {
+      peekBanter.value =
+        "Trying to swindle an elf with a gun using his own solutions? No wonder you couldn't come up with your own!";
+    }
+  } catch (error) {
+    console.error("Error in checkSolutions:", error);
     peekBanter.value =
-      "Trying to swindle an elf with a gun using his own solutions? No wonder you couldn't come up with your own!";
+      "Something went wrong. If anyone asks, we've never seen each other.";
   }
 };
 
@@ -201,34 +211,36 @@ onMounted(() => {
   });
 
   worker.onmessage = (event) => {
-    isCalculating.value = false;
-    if (event.data.peek) {
+    const { type, partialResult, peek } = event.data;
+    if (!peek) {
+      if (type === "solvePart1") result.value[0] = partialResult;
+      else if (type === "solvePart2") result.value[1] = partialResult;
+      else if (type === "examplePart1") {
+        exampleResult.value[0] = partialResult;
+        emit("onExample", [[exampleResult.value[0]], [exampleResult.value[1]]]);
+      } else if (type === "examplePart2") {
+        exampleResult.value[1] = partialResult;
+        emit("onExample", [[exampleResult.value[0]], [exampleResult.value[1]]]);
+      } else if (type === "error") console.error(event.data.error);
+    } else {
+      if (type === "solvePart1") peekSolutions.value[0] = partialResult;
+      else if (type === "solvePart2") peekSolutions.value[1] = partialResult;
       peekPromise.value.then(() => {
         if (
-          parseInt(peekPart1Solution.value) === event.data.result[0] &&
-          parseInt(peekPart2Solution.value) === event.data.result[1]
+          parseInt(peekPart1Solution.value) === peekSolutions.value[0] &&
+          parseInt(peekPart2Solution.value) === peekSolutions.value[1]
         ) {
           allowPeek.value = true;
           peekLoading.value = false;
           peekBanter.value = "Okay, looks fine. Get on with it then!";
-        } else {
+        } else if (
+          peekSolutions.value[0] !== null &&
+          peekSolutions.value[1] !== null
+        ) {
           peekLoading.value = false;
           peekBanter.value = "... I don't like 'em.";
         }
       });
-    } else {
-      if (event.data.example !== undefined) {
-        exampleResult.value = event.data.example;
-        emit("onExample", [
-          [exampleResult.value[0]],
-          [exampleResult.value[1]],
-        ]);
-      }
-      if (event.data.result !== undefined) {
-        result.value = event.data.result;
-      } else if (event.data.error) {
-        console.error(event.data.error);
-      }
     }
   };
 
@@ -249,13 +261,38 @@ onMounted(() => {
       allowPeek.value = false;
       if (newInputs && newDataLoaded) {
         isCalculating.value = true;
-        worker.postMessage({
-          day: props.day,
-          inputs: JSON.parse(JSON.stringify(newInputs)),
-          example: JSON.parse(JSON.stringify(newExample)),
-          part: newPart,
-          differentExamples: newDifferentExamples,
-        });
+        if (newExample && newExample.length > 0) {
+          if (newPart === 1 || newPart === null) {
+            worker.postMessage({
+              type: "examplePart1",
+              day: props.day,
+              example: JSON.parse(JSON.stringify(newExample)),
+              differentExamples: newDifferentExamples,
+            });
+          }
+          if (newPart === 2 || newPart === null) {
+            worker.postMessage({
+              type: "examplePart2",
+              day: props.day,
+              example: JSON.parse(JSON.stringify(newExample)),
+              differentExamples: newDifferentExamples,
+            });
+          }
+        }
+        if (newPart === 1 || newPart === null) {
+          worker.postMessage({
+            type: "solvePart1",
+            day: props.day,
+            inputs: JSON.parse(JSON.stringify(newInputs)),
+          });
+        }
+        if (newPart === 2 || newPart === null) {
+          worker.postMessage({
+            type: "solvePart2",
+            day: props.day,
+            inputs: JSON.parse(JSON.stringify(newInputs)),
+          });
+        }
       }
     },
     { immediate: true, deep: true }
