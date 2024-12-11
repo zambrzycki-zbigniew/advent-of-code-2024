@@ -1,15 +1,15 @@
 {
-  "name": "zbigniew-zambrzycki",
-  "id": 3788958,
+  "last_star_ts": 1733920939,
+  "local_score": 219,
   "completion_day_level": {
     "1": {
-      "1": {
-        "get_star_ts": 1733060071,
-        "star_index": 0
-      },
       "2": {
-        "star_index": 1369,
-        "get_star_ts": 1733060539
+        "get_star_ts": 1733060539,
+        "star_index": 1369
+      },
+      "1": {
+        "star_index": 0,
+        "get_star_ts": 1733060071
       }
     },
     "4": {
@@ -22,6 +22,46 @@
         "star_index": 791272
       }
     },
+    "5": {
+      "2": {
+        "star_index": 1011042,
+        "get_star_ts": 1733387061
+      },
+      "1": {
+        "star_index": 1007584,
+        "get_star_ts": 1733385976
+      }
+    },
+    "10": {
+      "2": {
+        "star_index": 1876888,
+        "get_star_ts": 1733809159
+      },
+      "1": {
+        "star_index": 1875702,
+        "get_star_ts": 1733808902
+      }
+    },
+    "8": {
+      "2": {
+        "star_index": 1555464,
+        "get_star_ts": 1733638718
+      },
+      "1": {
+        "get_star_ts": 1733637850,
+        "star_index": 1553209
+      }
+    },
+    "6": {
+      "2": {
+        "get_star_ts": 1733484321,
+        "star_index": 1246100
+      },
+      "1": {
+        "star_index": 1234415,
+        "get_star_ts": 1733479695
+      }
+    },
     "7": {
       "1": {
         "get_star_ts": 1733564209,
@@ -32,24 +72,14 @@
         "star_index": 1412930
       }
     },
-    "6": {
+    "11": {
       "2": {
-        "star_index": 1246100,
-        "get_star_ts": 1733484321
+        "star_index": 2084179,
+        "get_star_ts": 1733920939
       },
       "1": {
-        "star_index": 1234415,
-        "get_star_ts": 1733479695
-      }
-    },
-    "10": {
-      "1": {
-        "star_index": 1875702,
-        "get_star_ts": 1733808902
-      },
-      "2": {
-        "get_star_ts": 1733809159,
-        "star_index": 1876888
+        "get_star_ts": 1733897283,
+        "star_index": 2035527
       }
     },
     "9": {
@@ -58,63 +88,33 @@
         "get_star_ts": 1733725059
       },
       "1": {
-        "star_index": 1713952,
-        "get_star_ts": 1733723061
-      }
-    },
-    "8": {
-      "1": {
-        "star_index": 1553209,
-        "get_star_ts": 1733637850
-      },
-      "2": {
-        "star_index": 1555464,
-        "get_star_ts": 1733638718
-      }
-    },
-    "2": {
-      "2": {
-        "get_star_ts": 1733140465,
-        "star_index": 240897
-      },
-      "1": {
-        "star_index": 237077,
-        "get_star_ts": 1733139446
-      }
-    },
-    "11": {
-      "2": {
-        "get_star_ts": 1733920939,
-        "star_index": 2084179
-      },
-      "1": {
-        "get_star_ts": 1733897283,
-        "star_index": 2035527
+        "get_star_ts": 1733723061,
+        "star_index": 1713952
       }
     },
     "3": {
-      "2": {
-        "star_index": 536317,
-        "get_star_ts": 1733222539
-      },
       "1": {
         "get_star_ts": 1733220280,
         "star_index": 527091
-      }
-    },
-    "5": {
-      "1": {
-        "get_star_ts": 1733385976,
-        "star_index": 1007584
       },
       "2": {
-        "get_star_ts": 1733387061,
-        "star_index": 1011042
+        "get_star_ts": 1733222539,
+        "star_index": 536317
+      }
+    },
+    "2": {
+      "1": {
+        "star_index": 237077,
+        "get_star_ts": 1733139446
+      },
+      "2": {
+        "get_star_ts": 1733140465,
+        "star_index": 240897
       }
     }
   },
-  "last_star_ts": 1733920939,
   "stars": 22,
-  "global_score": 0,
-  "local_score": 219
+  "id": 3788958,
+  "name": "zbigniew-zambrzycki",
+  "global_score": 0
 }
