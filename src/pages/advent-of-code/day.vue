@@ -7,6 +7,7 @@
           hide-details
           label="Example"
           :rows="exampleText.split('\n').length"
+          class="monospaced-textarea"
           outlined
           disabled
         ></v-textarea>
@@ -85,6 +86,7 @@
           v-model="exampleTexts[0]"
           label="Example 1"
           :rows="exampleTexts[0].split('\n').length"
+          class="monospaced-textarea"
           outlined
           disabled
         ></v-textarea>
@@ -128,6 +130,7 @@
           v-model="exampleTexts[1]"
           label="Example 2"
           :rows="exampleTexts[1].split('\n').length"
+          class="monospaced-textarea"
           outlined
           disabled
         ></v-textarea>
@@ -187,6 +190,7 @@
         v-model="text"
         hide-details
         label="Input"
+        class="monospaced-textarea"
         rows="10"
         outlined
         disabled
@@ -331,5 +335,8 @@ watch(
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+.monospaced-textarea textarea {
+  font-family: 'Courier New', Courier, monospace;
 }
 </style>
