@@ -89,15 +89,19 @@
             v-model="dialogData.example2"
             outlined
           ></v-textarea>
+          <v-btn-toggle v-model="dialogData.outputType" mandatory @update:modelValue="console.log($event)">
+            <v-btn>Number</v-btn>
+            <v-btn>String</v-btn>
+          </v-btn-toggle>
           <v-text-field
             label="Example Solution 1"
-            type="number"
+            :type="dialogData.outputType === 0 ? 'number' : 'string'"
             v-model="dialogData.exampleSolution1"
             outlined
           ></v-text-field>
           <v-text-field
             label="Example Solution 2"
-            type="number"
+            :type="dialogData.outputType === 0 ? 'number' : 'string'"
             v-model="dialogData.exampleSolution2"
             outlined
           ></v-text-field>
@@ -126,6 +130,7 @@ const dialogData = ref({
   example2: "",
   exampleSolution1: "",
   exampleSolution2: "",
+  outputType: 0
 });
 
 const completion_day_level = ref(null);
@@ -276,9 +281,11 @@ function saveData() {
 
   // Dane do zapisania w examples.json
   const newExamples = {
-    [day]: [parseInt(data.exampleSolution1), parseInt(data.exampleSolution2)],
+    [day]: [],
   };
-
+  if(data.outputType === 0) newExamples[day].push(parseInt(data.exampleSolution1), parseInt(data.exampleSolution2))
+  else newExamples[day].push(data.exampleSolution1, data.exampleSolution2)
+  
   Promise.all([
     fetch(`http://localhost:3001/inputs/${day}.txt`, {
       method: "PUT",
@@ -303,10 +310,15 @@ function saveData() {
   ])
     .then(() => {
       console.log("Files and examples.json updated successfully");
-      examples.value[day] = [
-        parseInt(data.exampleSolution1),
-        parseInt(data.exampleSolution2),
-      ];
+      if(data.outputType === 0)
+        examples.value[day] = [
+          parseInt(data.exampleSolution1),
+          parseInt(data.exampleSolution2),
+        ];
+      else examples.value[day] = [
+          data.exampleSolution1,
+          data.exampleSolution2,
+        ];
     })
     .catch((error) =>
       console.error("Error saving files or examples.json:", error)
