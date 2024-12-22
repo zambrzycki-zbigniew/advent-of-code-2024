@@ -79,8 +79,17 @@ function countTurns(directions) {
     return turns
 }
 
+//without scoring of the paths by the order of directions
+//everything eventually got wrong the deeper in recursion we went
+//I'm not exactly quite certain what's the analytical reason for
+//this order being one of two that works (the other has vertical directions order swapped)
+//but my belief it's because all sequences start from the right side and
+//in most of the cases go to left first
+//initially I've believed *any* order would suffice to make sure that we're keeping the
+//finger on the same button as long as possible, but for some reason it *has* to be:
+//left, vertical one, vertical two, right
 function orderingScore(directions) {
-    const order = ["<", "v", "^", ">"]
+    const order = ["<", "^", "v", ">"]
     return order.map(dir => {
         const index = directions.indexOf(dir)
         return index === -1 ? Infinity : index
