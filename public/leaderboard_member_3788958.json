@@ -1,65 +1,19 @@
 {
-  "id": 3788958,
   "last_star_ts": 1734789087,
+  "global_score": 0,
+  "local_score": 419,
+  "stars": 42,
+  "name": "zbigniew-zambrzycki",
+  "id": 3788958,
   "completion_day_level": {
-    "7": {
-      "1": {
-        "get_star_ts": 1733564209,
-        "star_index": 1409468
-      },
-      "2": {
-        "star_index": 1412930,
-        "get_star_ts": 1733565553
-      }
-    },
-    "14": {
-      "1": {
-        "star_index": 2429096,
-        "get_star_ts": 1734171208
-      },
-      "2": {
-        "star_index": 2432898,
-        "get_star_ts": 1734173502
-      }
-    },
-    "8": {
-      "1": {
-        "star_index": 1553209,
-        "get_star_ts": 1733637850
-      },
-      "2": {
-        "star_index": 1555464,
-        "get_star_ts": 1733638718
-      }
-    },
-    "1": {
-      "2": {
-        "star_index": 1369,
-        "get_star_ts": 1733060539
-      },
-      "1": {
-        "star_index": 0,
-        "get_star_ts": 1733060071
-      }
-    },
-    "21": {
-      "2": {
-        "star_index": 3058666,
-        "get_star_ts": 1734789087
-      },
-      "1": {
-        "star_index": 3053509,
-        "get_star_ts": 1734781265
-      }
-    },
     "6": {
-      "2": {
-        "star_index": 1246100,
-        "get_star_ts": 1733484321
-      },
       "1": {
-        "get_star_ts": 1733479695,
-        "star_index": 1234415
+        "star_index": 1234415,
+        "get_star_ts": 1733479695
+      },
+      "2": {
+        "get_star_ts": 1733484321,
+        "star_index": 1246100
       }
     },
     "2": {
@@ -68,58 +22,78 @@
         "get_star_ts": 1733140465
       },
       "1": {
-        "get_star_ts": 1733139446,
-        "star_index": 237077
+        "star_index": 237077,
+        "get_star_ts": 1733139446
+      }
+    },
+    "14": {
+      "1": {
+        "get_star_ts": 1734171208,
+        "star_index": 2429096
+      },
+      "2": {
+        "star_index": 2432898,
+        "get_star_ts": 1734173502
       }
     },
     "20": {
       "2": {
-        "star_index": 2983154,
-        "get_star_ts": 1734685986
+        "get_star_ts": 1734685986,
+        "star_index": 2983154
       },
       "1": {
-        "star_index": 2980451,
-        "get_star_ts": 1734683290
-      }
-    },
-    "9": {
-      "2": {
-        "get_star_ts": 1733725059,
-        "star_index": 1719891
-      },
-      "1": {
-        "star_index": 1713952,
-        "get_star_ts": 1733723061
-      }
-    },
-    "3": {
-      "2": {
-        "star_index": 536317,
-        "get_star_ts": 1733222539
-      },
-      "1": {
-        "star_index": 527091,
-        "get_star_ts": 1733220280
-      }
-    },
-    "17": {
-      "1": {
-        "star_index": 2717467,
-        "get_star_ts": 1734422340
-      },
-      "2": {
-        "star_index": 2732878,
-        "get_star_ts": 1734435897
+        "get_star_ts": 1734683290,
+        "star_index": 2980451
       }
     },
     "11": {
       "2": {
-        "get_star_ts": 1733920939,
-        "star_index": 2084179
+        "star_index": 2084179,
+        "get_star_ts": 1733920939
       },
       "1": {
-        "get_star_ts": 1733897283,
-        "star_index": 2035527
+        "star_index": 2035527,
+        "get_star_ts": 1733897283
+      }
+    },
+    "7": {
+      "2": {
+        "star_index": 1412930,
+        "get_star_ts": 1733565553
+      },
+      "1": {
+        "star_index": 1409468,
+        "get_star_ts": 1733564209
+      }
+    },
+    "13": {
+      "1": {
+        "star_index": 2299796,
+        "get_star_ts": 1734075025
+      },
+      "2": {
+        "star_index": 2300206,
+        "get_star_ts": 1734075270
+      }
+    },
+    "10": {
+      "2": {
+        "star_index": 1876888,
+        "get_star_ts": 1733809159
+      },
+      "1": {
+        "get_star_ts": 1733808902,
+        "star_index": 1875702
+      }
+    },
+    "21": {
+      "1": {
+        "get_star_ts": 1734781265,
+        "star_index": 3053509
+      },
+      "2": {
+        "get_star_ts": 1734789087,
+        "star_index": 3058666
       }
     },
     "19": {
@@ -128,38 +102,58 @@
         "get_star_ts": 1734592029
       },
       "1": {
-        "star_index": 2891331,
-        "get_star_ts": 1734589440
+        "get_star_ts": 1734589440,
+        "star_index": 2891331
       }
     },
-    "10": {
+    "17": {
       "1": {
-        "get_star_ts": 1733808902,
-        "star_index": 1875702
+        "get_star_ts": 1734422340,
+        "star_index": 2717467
       },
       "2": {
-        "star_index": 1876888,
-        "get_star_ts": 1733809159
+        "star_index": 2732878,
+        "get_star_ts": 1734435897
       }
     },
-    "13": {
-      "2": {
-        "get_star_ts": 1734075270,
-        "star_index": 2300206
-      },
+    "5": {
       "1": {
-        "get_star_ts": 1734075025,
-        "star_index": 2299796
+        "star_index": 1007584,
+        "get_star_ts": 1733385976
+      },
+      "2": {
+        "star_index": 1011042,
+        "get_star_ts": 1733387061
       }
     },
-    "15": {
+    "3": {
       "1": {
-        "star_index": 2535187,
-        "get_star_ts": 1734257605
+        "get_star_ts": 1733220280,
+        "star_index": 527091
       },
       "2": {
-        "star_index": 2543623,
-        "get_star_ts": 1734263525
+        "star_index": 536317,
+        "get_star_ts": 1733222539
+      }
+    },
+    "18": {
+      "1": {
+        "star_index": 2811845,
+        "get_star_ts": 1734510350
+      },
+      "2": {
+        "star_index": 2813318,
+        "get_star_ts": 1734511437
+      }
+    },
+    "9": {
+      "1": {
+        "star_index": 1713952,
+        "get_star_ts": 1733723061
+      },
+      "2": {
+        "get_star_ts": 1733725059,
+        "star_index": 1719891
       }
     },
     "4": {
@@ -172,24 +166,34 @@
         "get_star_ts": 1733305828
       }
     },
-    "16": {
-      "1": {
-        "star_index": 2620111,
-        "get_star_ts": 1734330168
+    "1": {
+      "2": {
+        "get_star_ts": 1733060539,
+        "star_index": 1369
       },
+      "1": {
+        "star_index": 0,
+        "get_star_ts": 1733060071
+      }
+    },
+    "15": {
+      "1": {
+        "get_star_ts": 1734257605,
+        "star_index": 2535187
+      },
+      "2": {
+        "star_index": 2543623,
+        "get_star_ts": 1734263525
+      }
+    },
+    "16": {
       "2": {
         "get_star_ts": 1734331499,
         "star_index": 2621866
-      }
-    },
-    "18": {
-      "1": {
-        "get_star_ts": 1734510350,
-        "star_index": 2811845
       },
-      "2": {
-        "get_star_ts": 1734511437,
-        "star_index": 2813318
+      "1": {
+        "star_index": 2620111,
+        "get_star_ts": 1734330168
       }
     },
     "12": {
@@ -198,23 +202,19 @@
         "get_star_ts": 1733985616
       },
       "2": {
-        "star_index": 2183963,
-        "get_star_ts": 1733989128
+        "get_star_ts": 1733989128,
+        "star_index": 2183963
       }
     },
-    "5": {
-      "2": {
-        "star_index": 1011042,
-        "get_star_ts": 1733387061
-      },
+    "8": {
       "1": {
-        "star_index": 1007584,
-        "get_star_ts": 1733385976
+        "get_star_ts": 1733637850,
+        "star_index": 1553209
+      },
+      "2": {
+        "star_index": 1555464,
+        "get_star_ts": 1733638718
       }
     }
-  },
-  "global_score": 0,
-  "stars": 42,
-  "local_score": 419,
-  "name": "zbigniew-zambrzycki"
+  }
 }
